@@ -27,7 +27,7 @@ include '../headerPrin.php';
                             <input type="text" name="descripcion_tarjeta" class="form-control" placeholder="descripción" value="<?php echo  $fila['descripcion_tarjeta']?>">
 
                             <?php if($_GET['id'] != 0) { ?>
-                            <input type="hidden" name="ruta_img_elim" value="<?php echo $fila['ruta_tarjeta']?>">
+                            <input type="text" name="ruta_img_elim" value="<?php echo $fila['ruta_tarjeta']?>">
                             <?php } ?>
                             <br>
                             <button type="submit" class="btn btn-primary">Guardar</button>
