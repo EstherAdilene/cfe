@@ -43,8 +43,8 @@ include '../headerPrin.php';
                             <br>
                             Mes: <input type="text" disabled="" name="mes" class="form-control" value="<?php echo  $_GET['mes'] ?>">
                             <br>
-                            <input type="text" name="id_mes" value="<?php echo  $_GET['id_mes']?>">
-                            <input type="text" name="id" value="<?php echo  $_GET['id']?>">
+                            <input type="hidden" name="id_mes" value="<?php echo  $_GET['id_mes']?>">
+                            <input type="hidden" name="id" value="<?php echo  $_GET['id']?>">
                             <?php if($_GET['id'] != 0) { ?>
                             <input type="hidden" name="ruta" value="<?php echo  $_GET['rut']?>">
                             <?php } ?>
