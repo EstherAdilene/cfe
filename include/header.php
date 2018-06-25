@@ -59,7 +59,7 @@ require_once('controlador/conexion.php');
 					        while ($sql = mysqli_fetch_array($result)) { ?>
 
 					      	    <div>
-				        			<button style="width: 160px; height: 35px; text-align: center" type="button" class="btn alert-secondary" id="meses" data-id_mes="<?php echo  $sql['id_mes']?>" data-toggle="modal" data-target="#ventana"><?php echo  $sql['nombre_mes']?></button>
+				        			<button style="width: 160px; height: 35px; text-align: center" type="button" class="btn alert-secondary" id="meses" data-toggle="modal" data-target="#<?php echo  $sql['id_mes']?>"><?php echo  $sql['nombre_mes']?></button>
 				        		</div>
 
 					      	<?php } ?>
@@ -71,33 +71,8 @@ require_once('controlador/conexion.php');
 				    <!--modal ventana-->
 				    <!-- Modal -->
 
-				    <script type="text/javascript">
-				    	$(document).ready(function() {
-				    		$('body').on('click','#meses', function () {
-						        var id = $(this).attr('data-id_mes');
-						        $.ajax({
-						            url: "controlador/cursos_acciones.php",
-						            type: 'POST',
-						            dataType: 'json',
-						            data:{
-						                id:id,
-						                accion:"ajax"
-						            },beforeSend: function () {
-						            },success: function (data) {
-						            	if(data.tr != ""){
-						                	$('#tabla-cursos tbody').html(data.tr);
-						            	}else {
-						            		$('#tabla-cursos tbody').html("<tr><td>NO HAY CURSOS REGISTRADOS</td></tr>");
-						            	}
-						            },error: function (e) {
-						                console.log(e);
-						            }
-						        });
-						    });
-				    	});
-				    </script>
-
-					<div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <?php for($i = 1; $i < 13; $i++) { ?>
+					<div class="modal fade" id="<?php echo $i; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					  	<div class="modal-dialog" role="document">
 					    	<div class="modal-content">
 					      		<div class="modal-header">
@@ -118,6 +93,17 @@ require_once('controlador/conexion.php');
 			                            </tr>
 			                        </thead>
 			                        <tbody>
+                                                <?php 
+                                                $result = mysqli_query(conexion(), "select *from cursos, meses, instructores where cursos.id_instructor = instructores.id_instructor
+                                                and cursos.id_mes = meses.id_mes AND meses.id_mes = ".$i);
+                                                while ($row = mysqli_fetch_array($result)) {
+                                                ?>
+                                                <tr> 
+                                                    <td><?php echo $row['nombre_instructor']; ?></td>
+                                                    <td><?php echo $row['nombre_curso'] ?></td>
+                                                   <td><a href="<?php echo $row['archivo_curso'] ?>" target="_blank"><i class="far fa-file-pdf pointer" style="color: #212529;"></i></a></td>
+                                                </tr>
+                                                <?php } ?>
 			                        </tbody>
 			                    </table> 
 							</div>
@@ -129,6 +115,8 @@ require_once('controlador/conexion.php');
 					    </div>
 					  </div>
 					</div>
+                                    
+                                    <?php } ?>
 					
 			      <!--boton ligas de interes-->
 
